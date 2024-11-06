@@ -29,19 +29,25 @@ internal class StrongLoggerConsoleAppender : IStrongLoggerAppender
         }
 
         var sb = new StringBuilder($"{DateTimeOffset.UtcNow:O}|{logLevel}|");
-        if (exception != null)
-        {
-            sb.Append(exception);
-            sb.Append('|');
-            if (exception.StackTrace != null)
-            {
-                sb.Append(exception.StackTrace);
-                sb.Append('|');
-            }
-        }
-
+        LogException(sb, exception);
         sb.Append(logMessage);
 
         Console.Out.WriteLine(sb);
+    }
+
+    private void LogException(StringBuilder sb, Exception? exception)
+    {
+        if (exception == null)
+            return;
+
+        sb.Append(exception);
+        sb.Append('|');
+        if (exception.StackTrace != null)
+        {
+            sb.Append(exception.StackTrace);
+            sb.Append('|');
+        }
+
+        LogException(sb, exception.InnerException);
     }
 }
