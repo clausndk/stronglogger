@@ -2,5 +2,5 @@
 
 public interface IStrongLoggerAppender
 {
-    void Write(LogLevel logLevel, Exception? exception, string logMessage);
+    void Write(DateTimeOffset timestamp, LogLevel logLevel, Exception? exception, string logMessage);
 }

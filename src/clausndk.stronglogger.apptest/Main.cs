@@ -16,7 +16,7 @@ public class Main(IStrongLogger logger) : BackgroundService
 
             try
             {
-                throw new AccessViolationException("401", new ArgumentOutOfRangeException("MyMistake"));
+                throw new AccessViolationException("401", new ArgumentOutOfRangeException(nameof(stoppingToken)));
             }
             catch (Exception e)
             {

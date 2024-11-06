@@ -1,0 +1,11 @@
+services:
+  seq:
+    image: datalust/seq
+    ports:
+      - "5340:80"
+      - "5341:5341"
+    environment:
+      - ACCEPT_EULA=Y
+
+volumes:
+  stronglogger-local:

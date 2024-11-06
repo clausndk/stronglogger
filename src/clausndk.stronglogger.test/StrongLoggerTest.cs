@@ -44,7 +44,7 @@ public class StrongLoggerTest
         sut.Log(logLevel, logMessage);
 
         A.CallTo(() =>
-                fakeAppender.Write(logLevel, null, logMessage))
+                fakeAppender.Write(A<DateTimeOffset>.Ignored, logLevel, null, logMessage))
             .MustHaveHappened();
     }
 
@@ -61,7 +61,7 @@ public class StrongLoggerTest
         sut.Log(LogLevel.Verbose, logMessage);
 
         A.CallTo(() =>
-                fakeAppender.Write(LogLevel.Verbose, null, logMessage))
+                fakeAppender.Write(A<DateTimeOffset>.Ignored, LogLevel.Verbose, null, logMessage))
             .MustNotHaveHappened();
     }
 
@@ -79,7 +79,7 @@ public class StrongLoggerTest
         sut.Log(logLevel, e, logMessage);
 
         A.CallTo(() =>
-                fakeAppender.Write(logLevel, e, logMessage))
+                fakeAppender.Write(A<DateTimeOffset>.Ignored, logLevel, e, logMessage))
             .MustHaveHappened();
     }
 
@@ -97,7 +97,7 @@ public class StrongLoggerTest
         sut.Log(LogLevel.Verbose, e, logMessage);
 
         A.CallTo(() =>
-                fakeAppender.Write(LogLevel.Verbose, e, logMessage))
+                fakeAppender.Write(A<DateTimeOffset>.Ignored, LogLevel.Verbose, e, logMessage))
             .MustNotHaveHappened();
     }
 }

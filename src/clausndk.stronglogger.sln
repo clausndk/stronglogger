@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "clausndk.stronglogger.test"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "clausndk.stronglogger.apptest", "clausndk.stronglogger.apptest\clausndk.stronglogger.apptest.csproj", "{63579C47-2CDE-4E78-8A9B-07B8D53875C6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "clausndk.stronglogger.json", "clausndk.stronglogger.json\clausndk.stronglogger.json.csproj", "{2541C6E9-1954-44E2-B8A8-380DFE955EB3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{63579C47-2CDE-4E78-8A9B-07B8D53875C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{63579C47-2CDE-4E78-8A9B-07B8D53875C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{63579C47-2CDE-4E78-8A9B-07B8D53875C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2541C6E9-1954-44E2-B8A8-380DFE955EB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2541C6E9-1954-44E2-B8A8-380DFE955EB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2541C6E9-1954-44E2-B8A8-380DFE955EB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2541C6E9-1954-44E2-B8A8-380DFE955EB3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

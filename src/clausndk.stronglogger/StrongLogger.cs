@@ -15,9 +15,11 @@ internal class StrongLogger(StrongLoggerBuilder builder) : IStrongLogger
         if (LogLevel > logLevel)
             return;
 
+        var ts = DateTimeOffset.UtcNow;
+
         Parallel.ForEach(Appenders, appender =>
         {
-            appender.Write(logLevel, exception, message);
+            appender.Write(ts, logLevel, exception, message);
         });
     }
 }
