@@ -31,6 +31,16 @@ public class StrongLoggerBuilderTest
     }
 
     [Theory, AutoFakeItEasyData]
+    internal void AddConsoleAppender_AddsAppender_ReturnsBuilder(
+        StrongLoggerBuilder sut)
+    {
+        var result = sut.AddConsoleAppender();
+
+        Assert.Equal(sut, result);
+        Assert.All(result.Appenders, a => Assert.IsAssignableFrom<StrongLoggerConsoleAppender>(a));
+    }
+
+    [Theory, AutoFakeItEasyData]
     internal void AddAppender_AddsAppender_ReturnsBuilder(
         StrongLoggerConsoleAppender consoleAppender,
         StrongLoggerBuilder sut)

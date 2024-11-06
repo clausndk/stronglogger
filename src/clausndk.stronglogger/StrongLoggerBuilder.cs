@@ -26,4 +26,11 @@ public class StrongLoggerBuilder
 
         return this;
     }
+
+    public StrongLoggerBuilder AddConsoleAppender()
+    {
+        _appenders.Add(new StrongLoggerConsoleAppender());
+
+        return this;
+    }
 }
