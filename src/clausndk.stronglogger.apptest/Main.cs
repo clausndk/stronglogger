@@ -6,18 +6,23 @@ public class Main(IStrongLogger logger) : BackgroundService
 {
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        var i = 0;
         while (!stoppingToken.IsCancellationRequested)
         {
-            logger.Log(LogLevel.Information, $"Hello world - {Guid.NewGuid():D}");
+            logger.Log(LogLevel.Verbose, $"Hello Verbose - {Guid.NewGuid():D}");
+            logger.Log(LogLevel.Debug, $"Hello Debug - {Guid.NewGuid():D}");
+            logger.Log(LogLevel.Information, $"Hello Information - {Guid.NewGuid():D}");
+            logger.Log(LogLevel.Warning, $"Hello Warning - {Guid.NewGuid():D}");
+            logger.Log(LogLevel.Error, $"Hello Error - {Guid.NewGuid():D}");
 
-            if (i == 3)
+            try
             {
-                logger.Log(LogLevel.Error, new AccessViolationException("401"), $"World fail - {Guid.NewGuid():D}");
-                i = 0;
+                throw new AccessViolationException("401");
+            }
+            catch (Exception e)
+            {
+                logger.Log(LogLevel.Fatal, e, $"World fail - {Guid.NewGuid():D}");
             }
 
-            i++;
             await Task.Delay(TimeSpan.FromSeconds(5), stoppingToken);
         }
     }
