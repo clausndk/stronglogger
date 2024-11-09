@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "clausndk.stronglogger", "clausndk.stronglogger\clausndk.stronglogger.csproj", "{D4071F96-D85E-4D17-AEEE-D761871C11CA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "clausndk.stronglogger", "clausndk.stronglogger\clausndk.stronglogger.csproj", "{D4071F96-D85E-4D17-AEEE-D761871C11CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "clausndk.stronglogger.test", "clausndk.stronglogger.test\clausndk.stronglogger.test.csproj", "{4F8CD1BF-9201-4578-BEE7-D3B7EF7610BF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "clausndk.stronglogger.test", "clausndk.stronglogger.test\clausndk.stronglogger.test.csproj", "{4F8CD1BF-9201-4578-BEE7-D3B7EF7610BF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "clausndk.stronglogger.apptest", "clausndk.stronglogger.apptest\clausndk.stronglogger.apptest.csproj", "{63579C47-2CDE-4E78-8A9B-07B8D53875C6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "clausndk.stronglogger.apptest", "clausndk.stronglogger.apptest\clausndk.stronglogger.apptest.csproj", "{63579C47-2CDE-4E78-8A9B-07B8D53875C6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "clausndk.stronglogger.json", "clausndk.stronglogger.json\clausndk.stronglogger.json.csproj", "{2541C6E9-1954-44E2-B8A8-380DFE955EB3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "clausndk.stronglogger.json", "clausndk.stronglogger.json\clausndk.stronglogger.json.csproj", "{2541C6E9-1954-44E2-B8A8-380DFE955EB3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "clausndk.stronglogger.xml", "clausndk.stronglogger.xml\clausndk.stronglogger.xml.csproj", "{F2B12842-F1BA-4B7B-9B5F-E78A18A881CE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{2541C6E9-1954-44E2-B8A8-380DFE955EB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2541C6E9-1954-44E2-B8A8-380DFE955EB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2541C6E9-1954-44E2-B8A8-380DFE955EB3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F2B12842-F1BA-4B7B-9B5F-E78A18A881CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2B12842-F1BA-4B7B-9B5F-E78A18A881CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2B12842-F1BA-4B7B-9B5F-E78A18A881CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2B12842-F1BA-4B7B-9B5F-E78A18A881CE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

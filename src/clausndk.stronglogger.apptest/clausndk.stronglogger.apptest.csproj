@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\clausndk.stronglogger.json\clausndk.stronglogger.json.csproj" />
+    <ProjectReference Include="..\clausndk.stronglogger.xml\clausndk.stronglogger.xml.csproj" />
     <ProjectReference Include="..\clausndk.stronglogger\clausndk.stronglogger.csproj" />
   </ItemGroup>
 
