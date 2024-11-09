@@ -1,7 +1,9 @@
 ﻿using System.Collections.Concurrent;
-using System.Diagnostics;
 using System.Net.Http.Headers;
+using System.Reflection;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace clausndk.stronglogger.apptest;
 
@@ -11,12 +13,14 @@ internal class CustomSeqLogAppender : IStrongLoggerAppender, IDisposable
     private readonly HttpClient _client;
     private readonly Task _task;
     private readonly CancellationTokenSource _cancellationToken;
+    protected static readonly JsonSerializerOptions JsonSerializerOptions = new(JsonSerializerOptions.Default);
 
     public CustomSeqLogAppender(HttpClient client)
     {
         _client = client;
         _cancellationToken = new CancellationTokenSource();
         _task = Task.Factory.StartNew(Run, TaskCreationOptions.LongRunning);
+        JsonSerializerOptions.Converters.Add(new ExceptionConverter());
     }
 
     private async Task Run()
@@ -53,8 +57,8 @@ internal class CustomSeqLogAppender : IStrongLoggerAppender, IDisposable
             new MediaTypeHeaderValue("application/vnd.serilog.clef"));
         var url = "http://localhost:5341/ingest/clef";
         using var response = await _client.PostAsync(url, content);
-        var stringResponse = await response.Content.ReadAsStringAsync();
-        Debug.WriteLine(stringResponse);
+        //var stringResponse = await response.Content.ReadAsStringAsync();
+        //Debug.WriteLine(stringResponse);
     }
 
     public void Write(DateTimeOffset timestamp, LogLevel logLevel, Exception? exception, string logMessage)
@@ -73,14 +77,51 @@ internal class CustomSeqLogAppender : IStrongLoggerAppender, IDisposable
 
     private record QueueItem(DateTimeOffset Timestamp, LogLevel LogLevel, Exception? Exception, string LogMessage)
     {
-        public string ToJson()
+        public StringBuilder ToJson()
         {
             var sb = new StringBuilder("{\"@t\":\"");
             sb.Append($"{Timestamp:s}Z\",\"@l\":\"{LogLevel}\",\"@m\":\"{LogMessage}\"");
-            //LogException(sb, Exception);
+            LogException(sb, Exception);
             sb.Append('}');
 
-            return sb.ToString();
+            return sb;
+        }
+
+        private void LogException(StringBuilder sb, Exception? exception)
+        {
+            if (exception == null)
+                return;
+
+            var ex = System.Text.Json.JsonSerializer.Serialize(exception, JsonSerializerOptions);
+            sb.Append($",\"@x\":\"{ex}\",\"Stacktrace\":\"{exception.StackTrace}\"");
+        }
+    }
+
+    private class ExceptionConverter : JsonConverter<Exception>
+    {
+        public override Exception? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        {
+            return new NotImplementedException();
+        }
+
+        public override void Write(Utf8JsonWriter writer, Exception value, JsonSerializerOptions options)
+        {
+            writer.WriteStartObject();
+            var exceptionType = value.GetType();
+            writer.WriteString("ClassName", exceptionType.FullName);
+            var properties = exceptionType.GetProperties()
+                .Where(e => e.PropertyType != typeof(Type))
+                .Where(e => e.PropertyType.Namespace != typeof(MemberInfo).Namespace)
+                .ToList();
+            foreach (var property in properties)
+            {
+                var propertyValue = property.GetValue(value, null);
+                if (options.DefaultIgnoreCondition == JsonIgnoreCondition.WhenWritingNull && propertyValue == null)
+                    continue;
+                writer.WritePropertyName(property.Name);
+                JsonSerializer.Serialize(writer, propertyValue, property.PropertyType, options);
+            }
+            writer.WriteEndObject();
         }
     }
 }
