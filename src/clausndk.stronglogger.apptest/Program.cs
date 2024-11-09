@@ -2,13 +2,16 @@
 
 using clausndk.stronglogger;
 using clausndk.stronglogger.apptest;
+using clausndk.stronglogger.json;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 var httpClient = new HttpClient();
+var jsonLogAppender = new JsonFileStrongLoggerAppender(@"D:\StrongLogs", "yyyy-MM-dd");
 var customSeqLogAppender = new CustomSeqLogAppender(httpClient);
 var strongLogger = new StrongLoggerBuilder()
     .AddConsoleAppender()
+    .AddAppender(jsonLogAppender)
     .AddAppender(customSeqLogAppender)
     .Build();
 

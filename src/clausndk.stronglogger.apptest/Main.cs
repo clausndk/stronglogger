@@ -16,7 +16,7 @@ public class Main(IStrongLogger logger) : BackgroundService
 
             try
             {
-                throw new AccessViolationException("401", new ArgumentOutOfRangeException(nameof(stoppingToken)));
+                throw new AccessViolationException("Du har ikke adgang", new ArgumentOutOfRangeException(nameof(stoppingToken), new DataMisalignedException("Har du styr på dine parametre?")));
             }
             catch (Exception e)
             {

@@ -76,7 +76,7 @@ internal class CustomSeqLogAppender : IStrongLoggerAppender, IDisposable
         public string ToJson()
         {
             var sb = new StringBuilder("{\"@t\":\"");
-            sb.Append($"{DateTimeOffset.UtcNow:s}Z\",\"@l\":\"{LogLevel}\",\"@m\":\"{LogMessage}\"");
+            sb.Append($"{Timestamp:s}Z\",\"@l\":\"{LogLevel}\",\"@m\":\"{LogMessage}\"");
             //LogException(sb, Exception);
             sb.Append('}');
 
