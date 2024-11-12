@@ -7,7 +7,6 @@ namespace clausndk.stronglogger.json;
 
 public class JsonFileStrongLoggerAppender : IStrongLoggerAppender
 {
-    private readonly StringBuilder _sb = new();
     private readonly string _outputPath;
     private readonly string _filenameFormat;
     protected static readonly JsonSerializerOptions JsonSerializerOptions = new(JsonSerializerOptions.Default);
@@ -16,7 +15,9 @@ public class JsonFileStrongLoggerAppender : IStrongLoggerAppender
     {
         _outputPath = outputPath;
         _filenameFormat = filenameFormat;
+        JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
         JsonSerializerOptions.Converters.Add(new ExceptionConverter());
+        JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
     }
 
     public void Write(DateTimeOffset timestamp, LogLevel logLevel, Exception? exception, string logMessage)
