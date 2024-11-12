@@ -24,34 +24,41 @@ public class JsonFileStrongLoggerAppender : IStrongLoggerAppender
         var outputFile = Path.Join(_outputPath, $"{timestamp.ToString(_filenameFormat)}.json");
         if (!Directory.Exists(_outputPath))
             Directory.CreateDirectory(_outputPath);
-
-        var output = CreateJsonLogEntry(timestamp, logLevel, exception, logMessage);
+        
         using var fileStream = new StreamWriter(
             outputFile,
             Encoding.UTF8,
             new FileStreamOptions { Access = FileAccess.Write, Mode = FileMode.Append });
-        fileStream.WriteLine(output);
+        CreateJsonLogEntry(fileStream, timestamp, logLevel, exception, logMessage);
+        fileStream.WriteLine();
     }
 
-    private StringBuilder CreateJsonLogEntry(DateTimeOffset timestamp, LogLevel logLevel, Exception? exception,
+    private void CreateJsonLogEntry(StreamWriter fileStream, DateTimeOffset timestamp, LogLevel logLevel,
+        Exception? exception,
         string logMessage)
     {
-        _sb.Clear();
-        _sb.Append("{\"@t\":\"");
-        _sb.Append($"{timestamp:s}Z\",\"@l\":\"{logLevel}\",\"@m\":\"{logMessage}\"");
-        LogException(_sb, exception);
-        _sb.Append('}');
-
-        return _sb;
+        new JsonLogEntry(timestamp, logLevel, exception, logMessage)
+            .ToJson(fileStream);
     }
 
-    private void LogException(StringBuilder sb, Exception? exception)
+    private record JsonLogEntry(DateTimeOffset Timestamp, LogLevel LogLevel, Exception? Exception, string LogMessage)
     {
-        if (exception == null)
-            return;
+        public void ToJson(StreamWriter fileStream)
+        {
+            JsonSerializer.Serialize(fileStream.BaseStream, this, JsonSerializerOptions);
+        }
 
-        var ex = System.Text.Json.JsonSerializer.Serialize(exception, JsonSerializerOptions);
-        sb.Append($",\"@x\":\"{ex}\",\"Stacktrace\":\"{exception.StackTrace}\"");
+        [JsonPropertyName("@t")]
+        public DateTimeOffset Timestamp { get; init; } = Timestamp;
+
+        [JsonPropertyName("@l")]
+        public LogLevel LogLevel { get; init; } = LogLevel;
+
+        [JsonPropertyName("@x")]
+        public Exception? Exception { get; init; } = Exception;
+
+        [JsonPropertyName("@m")]
+        public string LogMessage { get; init; } = LogMessage;
     }
 
     private class ExceptionConverter : JsonConverter<Exception>
