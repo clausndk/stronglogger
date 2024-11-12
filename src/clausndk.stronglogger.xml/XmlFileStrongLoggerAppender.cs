@@ -1,12 +1,9 @@
-﻿using System.Text;
-using System.Xml.Linq;
+﻿using System.Xml.Linq;
 
 namespace clausndk.stronglogger.json;
 
 public class XmlFileStrongLoggerAppender(string outputPath, string filenameFormat) : IStrongLoggerAppender
 {
-    private readonly StringBuilder _sb = new();
-
     public void Write(DateTimeOffset timestamp, LogLevel logLevel, Exception? exception, string logMessage)
     {
         var outputFile = Path.Join(outputPath, $"{timestamp.ToString(filenameFormat)}.xml");
